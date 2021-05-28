@@ -4,6 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+import br.com.zup.academy.ednelson.mercadolivre.security.SenhaLimpa;
 import br.com.zup.academy.ednelson.mercadolivre.validation.UniqueValue;
 
 public class NovoUsuarioRequest {
@@ -22,7 +23,7 @@ public class NovoUsuarioRequest {
 	}
 
 	public Usuario toModel() {
-		return new Usuario(login, senha);
+		return new Usuario(login, new SenhaLimpa(senha));
 	}
 	
 }

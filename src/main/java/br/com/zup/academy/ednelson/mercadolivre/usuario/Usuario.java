@@ -1,7 +1,5 @@
 package br.com.zup.academy.ednelson.mercadolivre.usuario;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -9,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import br.com.zup.academy.ednelson.mercadolivre.security.SenhaLimpa;
 
 @Entity
 public class Usuario {
@@ -18,21 +16,12 @@ public class Usuario {
 	private Long id;
 	private String login;
 	private String senha;
-	private LocalDateTime instanteDoCadastro = LocalDateTime.now();
+	private LocalDateTime instanteDoCadastro;
 	
-	public Usuario(String login, String senhaLimpa) {
-		
-		byte[] digest;
-		
-		try {
-			digest = MessageDigest.getInstance("sha-256").digest(senhaLimpa.getBytes());
+	public Usuario(String login, SenhaLimpa senhaLimpa) {
 			this.login = login;
-			this.senha = Base64.encodeBase64String(digest);
-			
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		
+			this.senha = senhaLimpa.hash();
+			this.instanteDoCadastro = LocalDateTime.now();
 	}
 
 	@Deprecated
