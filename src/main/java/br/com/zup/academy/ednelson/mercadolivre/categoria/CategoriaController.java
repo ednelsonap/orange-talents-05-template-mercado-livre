@@ -1,7 +1,5 @@
 package br.com.zup.academy.ednelson.mercadolivre.categoria;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +18,8 @@ public class CategoriaController {
 
 	@PostMapping
 	private ResponseEntity<CategoriaDto> cadastrar(@RequestBody @Valid NovaCategoriaRequest request) {
-		Optional<Categoria> categoriaMae = null;
-		Categoria categoria;
-
-		if (request.getCategoriaMae() != null) {
-			categoriaMae = categoriaRepository.findById(request.getCategoriaMae());
-			categoria = request.toModel(categoriaMae);
-		}
-
-		categoria = request.toModel(categoriaMae);
+		
+		Categoria categoria = request.toModel(categoriaRepository);
 		categoriaRepository.save(categoria);
 		
 		return ResponseEntity.ok(new CategoriaDto(categoria));

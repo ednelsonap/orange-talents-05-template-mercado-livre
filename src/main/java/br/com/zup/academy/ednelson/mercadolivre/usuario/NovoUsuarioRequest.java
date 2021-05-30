@@ -11,19 +11,19 @@ public class NovoUsuarioRequest {
 
 	@NotBlank
 	@Email
-	@UniqueValue(atributo = "login", entidade = Usuario.class)
-	private String login;
+	@UniqueValue(atributo = "email", entidade = Usuario.class)
+	private String email;
 	@NotBlank
 	@Min(6)
 	private String senha;
 	
-	public NovoUsuarioRequest(@NotBlank @Email String login, @NotBlank @Min(6) String senha) {
-		this.login = login;
+	public NovoUsuarioRequest(@NotBlank @Email String email, @NotBlank @Min(6) String senha) {
+		this.email = email;
 		this.senha = senha;
 	}
 
 	public Usuario toModel() {
-		return new Usuario(login, new SenhaLimpa(senha));
+		return new Usuario(email, new SenhaLimpa(senha));
 	}
 	
 }

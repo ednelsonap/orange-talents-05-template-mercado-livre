@@ -1,8 +1,7 @@
 package br.com.zup.academy.ednelson.mercadolivre.categoria;
 
-import java.util.Optional;
-
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 import br.com.zup.academy.ednelson.mercadolivre.validation.ExistsId;
 import br.com.zup.academy.ednelson.mercadolivre.validation.UniqueValue;
@@ -13,21 +12,20 @@ public class NovaCategoriaRequest {
 	@UniqueValue(atributo = "nome", entidade = Categoria.class)
 	private String nome;
 	@ExistsId(domainClass = Categoria.class, fieldName = "id")
-	private Long categoriaMae;
+	@Positive
+	private Long idCategoriaMae;
 	
-	public NovaCategoriaRequest(@NotBlank String nome, Long categoriaMae) {
+	public NovaCategoriaRequest(@NotBlank String nome, @Positive Long idCategoriaMae) {
 		this.nome = nome;
-		this.categoriaMae = categoriaMae;
+		this.idCategoriaMae = idCategoriaMae;
 	}
 
-	public Categoria toModel(Optional<Categoria> categoriaMae) {
-		if(categoriaMae != null && categoriaMae.isPresent()) {
-			return new Categoria(nome, categoriaMae.get());
+	public Categoria toModel(CategoriaRepository categoriaRepository) {
+		Categoria categoria = new Categoria(nome);
+		if(idCategoriaMae != null) {
+			categoria.setCategoriaMae(categoriaRepository.findById(idCategoriaMae).get());
 		} 
-		return new Categoria(nome, null);
+		return categoria;
 	}
-
-	public Long getCategoriaMae() {
-		return categoriaMae;
-	}
+	
 }

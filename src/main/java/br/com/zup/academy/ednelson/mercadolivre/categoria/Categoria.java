@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -14,12 +14,11 @@ public class Categoria {
 	private Long id;
 	@NotBlank
 	private String nome;
-	@OneToOne
+	@ManyToOne
 	private Categoria categoriaMae;
 	
-	public Categoria(@NotBlank String nome, Categoria categoriaMae) {
+	public Categoria(@NotBlank String nome) {
 		this.nome = nome;
-		this.categoriaMae = categoriaMae;
 	}
 	
 	@Deprecated
@@ -37,5 +36,9 @@ public class Categoria {
 	
 	public Categoria getCategoriaMae() {
 		return categoriaMae;
+	}
+	
+	public void setCategoriaMae(Categoria categoriaMae) {
+		this.categoriaMae = categoriaMae;
 	}
 }

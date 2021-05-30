@@ -4,12 +4,14 @@ public class CategoriaDto {
 
 	private Long id;
 	private String nome;
-	private String categoriaMae;
+	private CategoriaMaeDto categoriaMae;
 	
 	public CategoriaDto(Categoria categoria) {
 		this.id = categoria.getId();
 		this.nome = categoria.getNome();
-		this.categoriaMae = categoria.getCategoriaMae().getNome();
+		if(categoria.getCategoriaMae() != null) {
+			this.categoriaMae = new CategoriaMaeDto(categoria.getCategoriaMae());
+		}
 	}
 	
 	public Long getId() {
@@ -20,7 +22,7 @@ public class CategoriaDto {
 		return nome;
 	}
 	
-	public String getCategoriaMae() {
+	public CategoriaMaeDto getCategoriaMae() {
 		return categoriaMae;
 	}
 }
