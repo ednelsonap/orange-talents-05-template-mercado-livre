@@ -12,7 +12,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
-public class GeradorDeToken {
+public class GerenciadorDeToken {
 
 	@Value("${mercadolivre.jwt.expiration}")
 	private String expiration;

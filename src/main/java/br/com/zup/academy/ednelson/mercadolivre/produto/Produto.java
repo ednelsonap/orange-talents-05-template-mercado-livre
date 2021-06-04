@@ -47,6 +47,13 @@ public class Produto {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
 	private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
 	private LocalDateTime instanteDoCadastro = LocalDateTime.now();
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<FotoProduto> fotosDoProduto = new HashSet<>();
+	
+	@Deprecated
+	public Produto() {
+		
+	}
 	
 	public Produto(@NotBlank String nome, @NotNull BigDecimal preco, @NotNull @Positive Long quantidadeDisponivel,
 			@NotBlank String descricao, @NotNull Categoria categoria, @NotNull Usuario usuarioQueCadastrou,
@@ -98,6 +105,10 @@ public class Produto {
 		return caracteristicas;
 	}
 
+	public void setFotosDoProduto(Set<FotoProduto> fotosDoProduto) {
+		this.fotosDoProduto = fotosDoProduto;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,6 +144,13 @@ public class Produto {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
+	}
+
+	public void associaImagens(Set<String> links) {
+		Set<FotoProduto> fotos = links.stream().map(link -> new FotoProduto(this, link))
+			.collect(Collectors.toSet());
+		
+		this.fotosDoProduto.addAll(fotos);
 	}
 
 }

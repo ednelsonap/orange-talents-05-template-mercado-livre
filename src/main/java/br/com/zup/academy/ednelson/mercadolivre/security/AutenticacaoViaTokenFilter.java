@@ -16,11 +16,11 @@ import br.com.zup.academy.ednelson.mercadolivre.usuario.UsuarioRepository;
 
 public class AutenticacaoViaTokenFilter extends OncePerRequestFilter{
 
-	private GeradorDeToken geradorDeToken;
+	private GerenciadorDeToken geradorDeToken;
 	
 	private UsuarioRepository usuarioRepository;
 	
-	public AutenticacaoViaTokenFilter(GeradorDeToken geradorDeToken, UsuarioRepository usuarioRepository) {
+	public AutenticacaoViaTokenFilter(GerenciadorDeToken geradorDeToken, UsuarioRepository usuarioRepository) {
 		this.geradorDeToken = geradorDeToken;
 		this.usuarioRepository = usuarioRepository;
 	}

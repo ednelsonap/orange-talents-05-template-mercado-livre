@@ -20,7 +20,7 @@ public class AutenticacaoController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
-	private GeradorDeToken geradorDeToken;
+	private GerenciadorDeToken geradorDeToken;
 	
 	@PostMapping
 	private ResponseEntity<TokenDto> autenticar(@RequestBody @Valid LoginRequest request) {
