@@ -15,7 +15,7 @@ public class ProdutoDto {
 	private Long quantidadeDisponivel;
 	private String descricao;
 	private CategoriaDto categoria;
-	private UsuarioDto usuario;
+	private UsuarioDto dono;
 	private Set<CaracteristicaProdutoDto> caracteristicas;
 	private String instanteDoCadastro;
 	
@@ -26,7 +26,7 @@ public class ProdutoDto {
 		this.quantidadeDisponivel = produto.getQuantidadeDisponivel();
 		this.descricao = produto.getDescricao();
 		this.categoria = new CategoriaDto(produto.getCategoria());
-		this.usuario = new UsuarioDto(produto.getUsuarioQueCadastrou());
+		this.dono = new UsuarioDto(produto.getUsuarioQueCadastrou());
 		this.caracteristicas = CaracteristicaProdutoDto.converter(produto.getCaracteristicas());
 		this.instanteDoCadastro = produto.getInstanteDoCadastro()
 				.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
@@ -56,8 +56,8 @@ public class ProdutoDto {
 		return categoria;
 	}
 
-	public UsuarioDto getUsuario() {
-		return usuario;
+	public UsuarioDto getDono() {
+		return dono;
 	}
 	
 	public String getInstanteDoCadastro() {

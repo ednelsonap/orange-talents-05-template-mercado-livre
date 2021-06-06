@@ -146,6 +146,16 @@ public class Produto {
 		return true;
 	}
 
+	
+	
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + ", quantidadeDisponivel="
+				+ quantidadeDisponivel + ", descricao=" + descricao + ", categoria=" + categoria
+				+ ", usuarioQueCadastrou=" + usuarioQueCadastrou + ", caracteristicas=" + caracteristicas
+				+ ", instanteDoCadastro=" + instanteDoCadastro + ", fotosDoProduto=" + fotosDoProduto + "]";
+	}
+
 	public void associaImagens(Set<String> links) {
 		Set<FotoProduto> fotos = links.stream().map(link -> new FotoProduto(this, link))
 			.collect(Collectors.toSet());
