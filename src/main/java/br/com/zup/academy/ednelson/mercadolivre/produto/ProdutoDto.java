@@ -26,7 +26,7 @@ public class ProdutoDto {
 		this.quantidadeDisponivel = produto.getQuantidadeDisponivel();
 		this.descricao = produto.getDescricao();
 		this.categoria = new CategoriaDto(produto.getCategoria());
-		this.dono = new UsuarioDto(produto.getUsuarioQueCadastrou());
+		this.dono = new UsuarioDto(produto.getDono());
 		this.caracteristicas = CaracteristicaProdutoDto.converter(produto.getCaracteristicas());
 		this.instanteDoCadastro = produto.getInstanteDoCadastro()
 				.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));

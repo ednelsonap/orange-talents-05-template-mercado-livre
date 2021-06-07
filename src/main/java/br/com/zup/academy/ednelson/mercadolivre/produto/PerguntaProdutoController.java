@@ -19,26 +19,29 @@ import br.com.zup.academy.ednelson.mercadolivre.usuario.Usuario;
 
 @RestController
 @RequestMapping
-public class OpiniaoProdutoController {
-	
+public class PerguntaProdutoController {
+
 	@Autowired
 	private EntityManager manager;
+	@Autowired
+	private GerenciadorDeEmail gerenciadorDeEmail;
 
-	@PostMapping("/produto/{id}/opiniao")
+	@PostMapping("/produto/{id}/pergunta")
 	@Transactional
-	public ResponseEntity<OpiniaoProdutoDto> cadastrar(@PathVariable("id") Long idProduto,
-			@AuthenticationPrincipal Usuario usuario,
-			@RequestBody @Valid NovaOpiniaoRequest request) {
+	public ResponseEntity<PerguntaProdutoDto> perguntar(@PathVariable("id") Long idProduto, @AuthenticationPrincipal Usuario usuario,
+			@RequestBody @Valid NovaPerguntaRequest request){
 		
 		Produto produto = manager.find(Produto.class, idProduto);
 		
-		if(produto == null){
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "o produto não existe");
+		if(produto == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "produdo inexistente!");
 		}
 		
-		OpiniaoProduto opiniaoProduto = request.toModel(usuario, produto);
-		manager.persist(opiniaoProduto);
+		PerguntaProduto perguntaProduto = request.toModel(usuario, produto);
+		manager.persist(perguntaProduto);
 		
-		return ResponseEntity.ok(new OpiniaoProdutoDto(opiniaoProduto));
+		gerenciadorDeEmail.enviaEmailNovaPergunta(perguntaProduto);
+		
+		return ResponseEntity.ok(new PerguntaProdutoDto(perguntaProduto));
 	}
 }

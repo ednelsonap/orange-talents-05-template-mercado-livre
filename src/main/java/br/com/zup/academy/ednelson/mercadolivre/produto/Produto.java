@@ -43,7 +43,7 @@ public class Produto {
 	private Categoria categoria; 
 	@NotNull
 	@ManyToOne
-	private Usuario usuarioQueCadastrou;
+	private Usuario dono;
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.PERSIST)
 	private Set<CaracteristicaProduto> caracteristicas = new HashSet<>();
 	private LocalDateTime instanteDoCadastro = LocalDateTime.now();
@@ -56,14 +56,14 @@ public class Produto {
 	}
 	
 	public Produto(@NotBlank String nome, @NotNull BigDecimal preco, @NotNull @Positive Long quantidadeDisponivel,
-			@NotBlank String descricao, @NotNull Categoria categoria, @NotNull Usuario usuarioQueCadastrou,
+			@NotBlank String descricao, @NotNull Categoria categoria, @NotNull Usuario dono,
 			@Size(min = 3) Collection<NovaCaracteristicaRequest> caracteristicas) {
 		this.nome = nome;
 		this.preco = preco;
 		this.quantidadeDisponivel = quantidadeDisponivel;
 		this.descricao = descricao;
 		this.categoria = categoria;
-		this.usuarioQueCadastrou = usuarioQueCadastrou;
+		this.dono = dono;
 		this.caracteristicas.addAll(caracteristicas
 				.stream().map(caracteristica -> caracteristica.toModel(this))
 				.collect(Collectors.toSet()));
@@ -93,8 +93,8 @@ public class Produto {
 		return categoria;
 	}
 
-	public Usuario getUsuarioQueCadastrou() {
-		return usuarioQueCadastrou;
+	public Usuario getDono() {
+		return dono;
 	}
 	
 	public LocalDateTime getInstanteDoCadastro() {
@@ -144,16 +144,6 @@ public class Produto {
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-
-	
-	
-	@Override
-	public String toString() {
-		return "Produto [id=" + id + ", nome=" + nome + ", preco=" + preco + ", quantidadeDisponivel="
-				+ quantidadeDisponivel + ", descricao=" + descricao + ", categoria=" + categoria
-				+ ", usuarioQueCadastrou=" + usuarioQueCadastrou + ", caracteristicas=" + caracteristicas
-				+ ", instanteDoCadastro=" + instanteDoCadastro + ", fotosDoProduto=" + fotosDoProduto + "]";
 	}
 
 	public void associaImagens(Set<String> links) {
